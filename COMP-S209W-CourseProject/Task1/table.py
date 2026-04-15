@@ -1,16 +1,24 @@
 class Table:
-
     def __init__(self, number, capacity):
-        self.number = number
-        self.capacity = capacity
-        self.occupied = False
+        self.__number = number
+        self.__capacity = capacity
+        self.__occupied = False
 
     def assign(self):
-        self.occupied = True
+        self.__occupied = True
 
     def release(self):
-        self.occupied = False
+        self.__occupied = False
 
-    def show_status(self):
-        status = "Occupied" if self.occupied else "Available"
-        print("Table", self.number, "-", status)
+    def is_available(self):
+        return not self.__occupied
+
+    def get_capacity(self):
+        return self.__capacity
+
+    def get_number(self):
+        return self.__number
+
+    def display(self):
+        status = "Occupied" if self.__occupied else "Available"
+        print(f"Table {self.__number} ({self.__capacity} seats) - {status}")

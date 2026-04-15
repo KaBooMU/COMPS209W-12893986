@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Restaurant Ordering System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <h1>Smart Restaurant Ordering and Table Management System</h1>
+      <p class="subtitle">Flask Web Interface using the original Python modules</p>
+    </header>
+
+    <main class="grid">
+      <section class="left-column">
+        <div class="card">
+          <h2>Create Order</h2>
+          <div class="form-grid">
+            <div>
+              <label for="customerName">Customer Name</label>
+              <input id="customerName" type="text" placeholder="Enter customer name">
+            </div>
+            <div>
+              <label for="customerPhone">Phone Number</label>
+              <input id="customerPhone" type="text" placeholder="Enter phone number">
+            </div>
+            <div>
+              <label for="groupSize">Group Size</label>
+              <input id="groupSize" type="number" min="1" value="2">
+            </div>
+          </div>
+          <button id="createOrderBtn" class="primary-btn">Create New Order</button>
+          <p id="orderStatus" class="status-text">No active order.</p>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h2>Menu</h2>
+            <div class="inline-controls">
+              <label for="menuFilter">Category</label>
+              <select id="menuFilter">
+                <option value="All">All</option>
+                <option value="FoodItem">Food</option>
+                <option value="DrinkItem">Drink</option>
+              </select>
+            </div>
+          </div>
+          <div id="menuList" class="list-panel"></div>
+        </div>
+
+        <div class="card">
+          <h2>Active Order</h2>
+          <div id="orderList" class="list-panel order-panel"></div>
+
+          <div class="summary-grid">
+            <div class="summary-box">
+              <span class="summary-label">Subtotal</span>
+              <span id="subtotal">HKD 0.00</span>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">Service (10%)</span>
+              <span id="serviceCharge">HKD 0.00</span>
+            </div>
+            <div class="summary-box">
+              <span class="summary-label">Total</span>
+              <span id="total">HKD 0.00</span>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button id="saveOrderBtn" class="secondary-btn">Save Order</button>
+            <button id="checkoutBtn" class="primary-btn">Checkout</button>
+            <button id="clearOrderBtn" class="danger-btn">Clear Display</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="right-column">
+        <div class="card">
+          <h2>Table Status</h2>
+          <div id="tableList" class="list-panel"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h2>Saved Order History</h2>
+            <button id="refreshHistoryBtn" class="secondary-btn small-btn">Refresh</button>
+          </div>
+          <div id="historyBox" class="list-panel history-panel"></div>
+          <p class="note">Saved to <code>orders.txt</code> using the original Python file handler.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

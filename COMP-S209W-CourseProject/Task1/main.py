@@ -1,41 +1,71 @@
 from customer import Customer
-from menu import FoodItem
-from table import Table
+from restaurant import Restaurant
 from order import Order
-
-
-def show_menu(menu):
-
-    print("\nRestaurant Menu")
-
-    for i in range(len(menu)):
-        print(i + 1, end=". ")
-        menu[i].display()
+from file_handler import FileHandler
 
 
 def main():
+    r = Restaurant()
+    r.setup()
+    fh = FileHandler("orders.txt")
 
-    menu = [
-        FoodItem("Fried Rice", 48, "Main"),
-        FoodItem("Burger", 55, "Main"),
-        FoodItem("Salad", 36, "Starter"),
-        FoodItem("Milk Tea", 18, "Drink"),
-        FoodItem("Ice Cream", 22, "Dessert")
-    ]
+    order = None
 
-    customer = Customer("Ng Chun Yiu", "91234567")
+    while True:
+        print("\n1.Menu 2.Tables 3.New Order 4.View Order 5.Remove Item")
+        print("6.Save History 7.View History 0.Exit")
 
-    table = Table(1, 4)
-    table.assign()
+        choice = input("Choice: ")
 
-    order = Order(customer)
+        if choice == "1":
+            r.show_menu()
 
-    show_menu(menu)
+        elif choice == "2":
+            r.show_tables()
 
-    order.add_item(menu[0])
-    order.add_item(menu[3])
+        elif choice == "3":
+            name = input("Name: ")
+            phone = input("Phone: ")
+            people = int(input("People: "))
 
-    order.display_order()
+            customer = Customer("C1", name, phone)
+            table = r.assign_table(people)
+
+            if not table:
+                print("No table available")
+                continue
+
+            order = Order(customer, table)
+
+            while True:
+                r.show_menu()
+                item_id = input("Add item (0 to stop): ")
+
+                if item_id == "0":
+                    break
+
+                item = r.find_item(item_id)
+                if item:
+                    order.add_item(item)
+
+        elif choice == "4":
+            if order:
+                order.display()
+
+        elif choice == "5":
+            if order:
+                index = int(input("Remove item number: ")) - 1
+                order.remove_item(index)
+
+        elif choice == "6":
+            if order:
+                fh.save(order)
+
+        elif choice == "7":
+            fh.read()
+
+        elif choice == "0":
+            break
 
 
 if __name__ == "__main__":
